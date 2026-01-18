@@ -1,0 +1,1201 @@
+# Unit Test Case Documentation - SkillBridge Project
+
+## Project Information
+
+**Project Name:** Training management system for SkillBridge  
+**Project Code:** SB  
+**Normal number of Test cases/KLOC:** 100
+
+### Test Environment Setup Description
+
+#### 1. Local machine
+- **Purpose:** Personal computer for development with the minimum configuration
+- **Processor:** Intel® Core i5 7th Gen or equivalent amd64 processors
+- **RAM:** 16GB RAM
+- **Operating System:** 64-bit operating system
+
+#### 2. Server
+- **Runner:** Github Actions Runner
+- **Processor:** Intel® Core i5 8300H (8 Logical Processors)
+- **RAM:** 16GB RAM
+- **Host OS:** Arch Linux Host; amd64
+
+---
+
+## Method List
+
+| No | Module Name | Method Name | Description |
+|----|-------------|-------------|-------------|
+| 1 | NotificationService | notifySalesManager | This function notifies sales manager about new contact |
+| 2 | HomepageService | getHomepageStatistics | This function retrieves homepage statistics (total engineers and customers) |
+| 3 | HomepageService | getFeaturedEngineers | This function retrieves featured engineers for homepage |
+| 4 | HomepageService | getEngineersByCategory | This function retrieves engineers by category (web, game, ai-ml) |
+| 5 | HomepageService | getAllCategoryEngineers | This function retrieves engineers grouped by all categories |
+| 6 | ContactService | processContactSubmission | This function processes contact form submission |
+| 7 | AuthService | login | This function handles user login with email and password |
+| 8 | AuthService | requestPasswordReset | This function requests password reset for user |
+| 9 | EngineerService | getEngineerDetailById | This function retrieves detailed engineer information by ID |
+| 10 | EngineerSearchService | searchEngineers | This function searches engineers based on criteria with pagination |
+| 11 | EngineerSearchService | getAvailableSkills | This function retrieves available primary skills for filters |
+| 12 | EngineerSearchService | getAvailableLocations | This function retrieves available locations for filters |
+| 13 | EngineerSearchService | getAvailableSeniorities | This function retrieves available seniority levels for filters |
+| 14 | ContactListService | getContactsForClient | This function retrieves contacts for client with search, filter, and pagination |
+| 15 | ContactListService | createContact | This function creates a new contact for authenticated client |
+| 16 | ProposalListService | getProposalsForClient | This function retrieves proposals for client with search, filter, and pagination |
+| 17 | PasswordService | generateRandomPassword | This function generates a random secure password |
+| 18 | PasswordService | hashPassword | This function hashes a password using BCrypt |
+| 19 | PasswordService | verifyPassword | This function verifies if a password matches the hashed password |
+| 20 | EmailService | sendConfirmationEmail | This function sends confirmation email to user |
+| 21 | ContractDetailService | getContractDetail | This function retrieves contract detail (MSA or SOW) for client |
+| 22 | ContractDetailService | approveContract | This function approves a contract (MSA or SOW) |
+| 23 | ContractDetailService | addComment | This function adds comment to contract and changes status to Request for Change |
+| 24 | ContractDetailService | cancelContract | This function cancels a contract (MSA or SOW) |
+| 25 | ContractListService | getContracts | This function retrieves contracts for client with search, filter, and pagination |
+| 26 | ChangeRequestService | createChangeRequest | This function creates a new change request |
+| 27 | ChangeRequestService | saveChangeRequestDraft | This function saves a change request as draft |
+| 28 | ChangeRequestDetailService | getChangeRequestDetail | This function retrieves detailed change request information |
+| 29 | ChangeRequestDetailService | updateChangeRequest | This function updates a change request (Draft status only) |
+| 30 | ChangeRequestDetailService | submitChangeRequest | This function submits a change request (Draft -> Under Review) |
+| 31 | ChangeRequestDetailService | approveChangeRequest | This function approves a change request (Under Review -> Active) |
+| 32 | ChangeRequestDetailService | requestForChange | This function requests for change on a change request (Under Review -> Request for Change) |
+| 33 | ChangeRequestDetailService | terminateChangeRequest | This function terminates a change request |
+
+---
+
+## Test Cases
+
+### 1. NotificationService - notifySalesManager
+
+**Code Module:** NotificationService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that sales manager is notified when a new contact is submitted
+
+**Method:** notifySalesManager  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 3 | 1 1 0 | 3 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 |
+|---|---|---|---|
+| **Condition** | | | |
+| **Precondition** | Can connect with server<br>Contact object with valid data | Can connect with server<br>Contact object is null | Can connect with server<br>No sales manager found in database |
+| **Input: Contact** | Valid Contact object | null | Valid Contact object<br>No sales manager in DB |
+| **Confirm** | | | |
+| **Return** | No exception thrown<br>Notification sent successfully | Exception thrown or handled gracefully | No exception thrown<br>Fallback to admin or log message |
+| **Exception** | None | NullPointerException or handled | None |
+| **Log message** | "Sales Manager Notification Prepared" | Error log message | "No sales manager or admin found to notify" |
+| **Result** | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F |
+| **Executed Date** | | | |
+| **Defect ID** | | | |
+
+---
+
+### 2. HomepageService - getHomepageStatistics
+
+**Code Module:** HomepageService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that homepage statistics are retrieved correctly
+
+**Method:** getHomepageStatistics  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 2 | 1 1 0 | 2 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 |
+|---|---|---|
+| **Condition** | | |
+| **Precondition** | Can connect with server<br>Database has engineer records | Can connect with server<br>Database connection fails |
+| **Input:** | No input parameters | No input parameters |
+| **Confirm** | | |
+| **Return** | HomepageStatistics object<br>totalEngineers > 0<br>totalCustomers = 30L | Exception thrown |
+| **Exception** | None | DatabaseException |
+| **Log message** | None | Error log message |
+| **Result** | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A |
+| **Passed/Failed** | P/F | P/F |
+| **Executed Date** | | |
+| **Defect ID** | | |
+
+---
+
+### 3. HomepageService - getFeaturedEngineers
+
+**Code Module:** HomepageService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that featured engineers are retrieved correctly (max 9 engineers)
+
+**Method:** getFeaturedEngineers  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 3 | 1 1 0 | 3 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 |
+|---|---|---|---|
+| **Condition** | | | |
+| **Precondition** | Can connect with server<br>Database has engineer records | Can connect with server<br>No engineers in database | Can connect with server<br>Database has exactly 9 engineers |
+| **Input:** | No input parameters | No input parameters | No input parameters |
+| **Confirm** | | | |
+| **Return** | List<EngineerProfile> with size <= 9 | Empty List<EngineerProfile> | List<EngineerProfile> with size = 9 |
+| **Exception** | None | None | None |
+| **Log message** | None | None | None |
+| **Result** | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F |
+| **Executed Date** | | | |
+| **Defect ID** | | | |
+
+---
+
+### 4. HomepageService - getEngineersByCategory
+
+**Code Module:** HomepageService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that engineers are retrieved by category correctly
+
+**Method:** getEngineersByCategory  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 4 | 2 1 0 | 4 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 |
+|---|---|---|---|---|
+| **Condition** | | | | |
+| **Precondition** | Can connect with server<br>Database has web engineers | Can connect with server<br>Database has game engineers | Can connect with server<br>Invalid category | Can connect with server<br>Category is null |
+| **Input: category** | "web" | "game" | "invalid_category" | null |
+| **Confirm** | | | | |
+| **Return** | List<EngineerProfile> with size <= 3<br>Category = "web" | List<EngineerProfile> with size <= 3<br>Category = "game" | List<EngineerProfile> (empty or default) | List<EngineerProfile> (empty or default) |
+| **Exception** | None | None | None | None or NullPointerException |
+| **Log message** | None | None | None | None or error log |
+| **Result** | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | |
+| **Defect ID** | | | | |
+
+---
+
+### 5. HomepageService - getAllCategoryEngineers
+
+**Code Module:** HomepageService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that engineers from all categories are retrieved correctly
+
+**Method:** getAllCategoryEngineers  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 2 | 1 1 0 | 2 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 |
+|---|---|---|
+| **Condition** | | |
+| **Precondition** | Can connect with server<br>Database has engineers in all categories | Can connect with server<br>Database has no engineers |
+| **Input:** | No input parameters | No input parameters |
+| **Confirm** | | |
+| **Return** | List<EngineerProfile> with size <= 9<br>(3 web + 3 game + 3 ai-ml) | Empty List<EngineerProfile> |
+| **Exception** | None | None |
+| **Log message** | None | None |
+| **Result** | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A |
+| **Passed/Failed** | P/F | P/F |
+| **Executed Date** | | |
+| **Defect ID** | | |
+
+---
+
+### 6. ContactService - processContactSubmission
+
+**Code Module:** ContactService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that contact form submission is processed correctly
+
+**Method:** processContactSubmission  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 4 | 2 1 0 | 4 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 |
+|---|---|---|---|---|
+| **Condition** | | | | |
+| **Precondition** | Can connect with server<br>Valid contact data<br>New user email | Can connect with server<br>Valid contact data<br>Existing user email | Can connect with server<br>Invalid contact data | Can connect with server<br>Contact data with empty email |
+| **Input: ContactFormData** | name: "John Doe"<br>companyName: "ABC Corporation"<br>phone: "+81-90-1234-5678"<br>email: "john.doe@abc.com"<br>title: "Project Inquiry"<br>message: "We are interested in your services" | name: "Jane Smith"<br>companyName: "XYZ Ltd"<br>phone: "+81-90-9876-5432"<br>email: "existing@user.com"<br>title: "Service Request"<br>message: "Looking for IT solutions" | null or invalid data | name: "Test User"<br>companyName: "Test Corp"<br>phone: "+81-90-1111-2222"<br>email: ""<br>title: "Test Title"<br>message: "Test message content" |
+| **Confirm** | | | | |
+| **Return** | ContactSubmissionResponse<br>success = true<br>contactId != null | ContactSubmissionResponse<br>success = true<br>contactId != null | Exception thrown | Exception thrown or validation error |
+| **Exception** | None | None | RuntimeException or ValidationException | ValidationException |
+| **Log message** | "Contact submission completed successfully" | "User already exists" | Error log message | Error log message |
+| **Result** | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | |
+| **Defect ID** | | | | |
+
+---
+
+### 7. AuthService - login
+
+**Code Module:** AuthService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that user login is handled correctly
+
+**Method:** login  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 5 | 1 3 0 | 5 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 | UTCID05 |
+|---|---|---|---|---|---|
+| **Condition** | | | | | |
+| **Precondition** | Can connect with server<br>Valid user credentials<br>Active account | Can connect with server<br>Invalid email | Can connect with server<br>Invalid password | Can connect with server<br>Inactive account | Can connect with server<br>Email is null |
+| **Input: LoginRequest** | email: "skillbridgetest@gmail.com"<br>password: "password123" | email: "invalid@email"<br>password: "password123" | email: "skillbridgetest@gmail.com"<br>password: "wrongpassword" | email: "inactive@user.com"<br>password: "password123" | email: null<br>password: "password123" |
+| **Confirm** | | | | | |
+| **Return** | LoginResponse<br>token != null<br>user != null | Exception thrown | Exception thrown | Exception thrown | Exception thrown |
+| **Exception** | None | RuntimeException("Invalid email or password") | RuntimeException("Invalid email or password") | RuntimeException("Your account is inactive") | RuntimeException or NullPointerException |
+| **Log message** | None | None | None | None | None or error log |
+| **Result** | | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A | A | A | B |
+| **Passed/Failed** | P/F | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | | |
+| **Defect ID** | | | | | |
+
+---
+
+### 8. AuthService - requestPasswordReset
+
+**Code Module:** AuthService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that password reset request is handled correctly
+
+**Method:** requestPasswordReset  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 3 | 1 1 0 | 3 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 |
+|---|---|---|---|
+| **Condition** | | | |
+| **Precondition** | Can connect with server<br>Valid email<br>Active account | Can connect with server<br>Non-existent email | Can connect with server<br>Email is null |
+| **Input: email** | Valid email string | Non-existent email | null |
+| **Confirm** | | | |
+| **Return** | No exception thrown<br>Reset token created | No exception thrown<br>(Security: don't reveal if email exists) | Exception thrown or handled |
+| **Exception** | None | None | NullPointerException or handled |
+| **Log message** | Password reset email prepared | None | None or error log |
+| **Result** | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F |
+| **Executed Date** | | | |
+| **Defect ID** | | | |
+
+---
+
+### 9. EngineerService - getEngineerDetailById
+
+**Code Module:** EngineerService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that detailed engineer information is retrieved correctly by ID
+
+**Method:** getEngineerDetailById  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 3 | 1 1 0 | 3 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 |
+|---|---|---|---|
+| **Condition** | | | |
+| **Precondition** | Can connect with server<br>Valid engineer ID exists | Can connect with server<br>Non-existent engineer ID | Can connect with server<br>ID is null |
+| **Input: id** | Valid integer ID (e.g., 1) | Non-existent ID (e.g., 99999) | null |
+| **Confirm** | | | |
+| **Return** | EngineerDetailDTO<br>id != null<br>skills != null<br>certificates != null | null | null or exception |
+| **Exception** | None | None | NullPointerException or handled |
+| **Log message** | None | None | None or error log |
+| **Result** | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F |
+| **Executed Date** | | | |
+| **Defect ID** | | | |
+
+---
+
+### 10. EngineerSearchService - searchEngineers
+
+**Code Module:** EngineerSearchService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that engineer search with criteria and pagination works correctly
+
+**Method:** searchEngineers  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 4 | 2 1 0 | 4 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 |
+|---|---|---|---|---|
+| **Condition** | | | | |
+| **Precondition** | Can connect with server<br>Valid search criteria<br>Matching engineers exist | Can connect with server<br>Valid search criteria<br>No matching engineers | Can connect with server<br>SearchCriteria is null | Can connect with server<br>Page number = 0, size = 1 |
+| **Input: SearchCriteria** | query: "Java"<br>skills: ["Spring", "Hibernate"]<br>languages: ["English", "Japanese"]<br>experienceMin: 3<br>experienceMax: 10<br>seniority: ["Senior"]<br>location: ["Ho Chi Minh"]<br>salaryMin: 10000000<br>salaryMax: 20000000<br>availability: true<br>page: 0<br>size: 20<br>sortBy: "relevance" | query: "NonExistentSkill"<br>skills: ["NonExistent"]<br>languages: null<br>experienceMin: null<br>experienceMax: null<br>seniority: null<br>location: null<br>salaryMin: null<br>salaryMax: null<br>availability: true<br>page: 0<br>size: 20<br>sortBy: "relevance" | null | query: "Java"<br>skills: null<br>languages: null<br>experienceMin: null<br>experienceMax: null<br>seniority: null<br>location: null<br>salaryMin: null<br>salaryMax: null<br>availability: true<br>page: 0<br>size: 1<br>sortBy: "relevance" |
+| **Confirm** | | | | |
+| **Return** | EngineerSearchResponse<br>profiles != null<br>totalElements > 0 | EngineerSearchResponse<br>profiles = empty list<br>totalElements = 0 | Exception thrown | EngineerSearchResponse<br>profiles.size() <= 1 |
+| **Exception** | None | None | NullPointerException | None |
+| **Log message** | None | None | None or error log | None |
+| **Result** | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | |
+| **Defect ID** | | | | |
+
+---
+
+### 11. EngineerSearchService - getAvailableSkills
+
+**Code Module:** EngineerSearchService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that available primary skills are retrieved correctly
+
+**Method:** getAvailableSkills  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 2 | 1 1 0 | 2 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 |
+|---|---|---|
+| **Condition** | | |
+| **Precondition** | Can connect with server<br>Database has engineers with skills | Can connect with server<br>Database has no engineers |
+| **Input:** | No input parameters | No input parameters |
+| **Confirm** | | |
+| **Return** | List<String> with distinct skills | Empty List<String> |
+| **Exception** | None | None |
+| **Log message** | None | None |
+| **Result** | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A |
+| **Passed/Failed** | P/F | P/F |
+| **Executed Date** | | |
+| **Defect ID** | | |
+
+---
+
+### 12. EngineerSearchService - getAvailableLocations
+
+**Code Module:** EngineerSearchService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that available locations are retrieved correctly
+
+**Method:** getAvailableLocations  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 2 | 1 1 0 | 2 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 |
+|---|---|---|
+| **Condition** | | |
+| **Precondition** | Can connect with server<br>Database has engineers with locations | Can connect with server<br>Database has no engineers |
+| **Input:** | No input parameters | No input parameters |
+| **Confirm** | | |
+| **Return** | List<String> with distinct locations | Empty List<String> |
+| **Exception** | None | None |
+| **Log message** | None | None |
+| **Result** | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A |
+| **Passed/Failed** | P/F | P/F |
+| **Executed Date** | | |
+| **Defect ID** | | |
+
+---
+
+### 13. EngineerSearchService - getAvailableSeniorities
+
+**Code Module:** EngineerSearchService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that available seniority levels are retrieved correctly
+
+**Method:** getAvailableSeniorities  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 2 | 1 1 0 | 2 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 |
+|---|---|---|
+| **Condition** | | |
+| **Precondition** | Can connect with server<br>Database has engineers with seniority | Can connect with server<br>Database has no engineers |
+| **Input:** | No input parameters | No input parameters |
+| **Confirm** | | |
+| **Return** | List<String> with distinct seniorities | Empty List<String> |
+| **Exception** | None | None |
+| **Log message** | None | None |
+| **Result** | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A |
+| **Passed/Failed** | P/F | P/F |
+| **Executed Date** | | |
+| **Defect ID** | | |
+
+---
+
+### 14. ContactListService - getContactsForClient
+
+**Code Module:** ContactListService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that contacts for client are retrieved with search, filter, and pagination
+
+**Method:** getContactsForClient  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 4 | 2 1 0 | 4 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 |
+|---|---|---|---|---|
+| **Condition** | | | | |
+| **Precondition** | Can connect with server<br>Valid clientUserId<br>Contacts exist | Can connect with server<br>Valid clientUserId<br>No contacts exist | Can connect with server<br>clientUserId is null | Can connect with server<br>page = 0, size = 1 |
+| **Input: clientUserId, search, status, page, size** | clientUserId: 1<br>search: ""<br>status: "All"<br>page: 0<br>size: 20 | clientUserId: 1<br>search: "NonExistentContact"<br>status: "All"<br>page: 0<br>size: 20 | clientUserId: null<br>search: ""<br>status: "All"<br>page: 0<br>size: 20 | clientUserId: 1<br>search: ""<br>status: "All"<br>page: 0<br>size: 1 |
+| **Confirm** | | | | |
+| **Return** | ContactListResponse<br>contacts != null<br>totalElements > 0 | ContactListResponse<br>contacts = empty list<br>totalElements = 0 | Exception thrown | ContactListResponse<br>contacts.size() <= 1 |
+| **Exception** | None | None | NullPointerException or IllegalArgumentException | None |
+| **Log message** | None | None | None or error log | None |
+| **Result** | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | |
+| **Defect ID** | | | | |
+
+---
+
+### 15. ContactListService - createContact
+
+**Code Module:** ContactListService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that a new contact is created correctly for authenticated client
+
+**Method:** createContact  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 4 | 1 2 0 | 4 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 |
+|---|---|---|---|---|
+| **Condition** | | | | |
+| **Precondition** | Can connect with server<br>Valid clientUserId and request | Can connect with server<br>Title is null | Can connect with server<br>Title is empty string | Can connect with server<br>Title with only whitespace |
+| **Input: clientUserId, CreateContactRequest** | clientUserId: 1<br>title: "New Contact Title"<br>description: "Contact description" | clientUserId: 1<br>title: null<br>description: "Contact description" | clientUserId: 1<br>title: ""<br>description: "Contact description" | clientUserId: 1<br>title: "   "<br>description: "Contact description" |
+| **Confirm** | | | | |
+| **Return** | CreateContactResponse<br>success = true<br>contactId != null | CreateContactResponse<br>success = false<br>message = "Title is required" | CreateContactResponse<br>success = false<br>message = "Title is required" | CreateContactResponse<br>success = false<br>message = "Title is required" |
+| **Exception** | None | None | None | None |
+| **Log message** | None | None | None | None |
+| **Result** | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A | A | B |
+| **Passed/Failed** | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | |
+| **Defect ID** | | | | |
+
+---
+
+### 16. ProposalListService - getProposalsForClient
+
+**Code Module:** ProposalListService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that proposals for client are retrieved with search, filter, and pagination
+
+**Method:** getProposalsForClient  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 4 | 2 1 0 | 4 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 |
+|---|---|---|---|---|
+| **Condition** | | | | |
+| **Precondition** | Can connect with server<br>Valid clientUserId<br>Proposals exist | Can connect with server<br>Valid clientUserId<br>No proposals exist | Can connect with server<br>Database error occurs | Can connect with server<br>page = 0, size = 1 |
+| **Input: clientUserId, search, status, page, size** | Valid parameters | Valid parameters, no matches | Valid parameters, DB error | page = 0, size = 1 |
+| **Confirm** | | | | |
+| **Return** | ProposalListResponse<br>proposals != null<br>totalElements > 0 | ProposalListResponse<br>proposals = empty list<br>totalElements = 0 | ProposalListResponse<br>proposals = empty list<br>totalElements = 0 | ProposalListResponse<br>proposals.size() <= 1 |
+| **Exception** | None | None | None (handled gracefully) | None |
+| **Log message** | None | None | Error log message | None |
+| **Result** | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | |
+| **Defect ID** | | | | |
+
+---
+
+### 17. PasswordService - generateRandomPassword
+
+**Code Module:** PasswordService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that a random secure password is generated correctly
+
+**Method:** generateRandomPassword  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 3 | 1 1 0 | 3 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 |
+|---|---|---|---|
+| **Condition** | | | |
+| **Precondition** | System is running | System is running<br>SecureRandom fails | System is running |
+| **Input:** | No input parameters | No input parameters | No input parameters |
+| **Confirm** | | | |
+| **Return** | String with length = 12<br>Contains uppercase, lowercase, digits, special chars | Exception thrown | String with length = 12<br>Password is shuffled |
+| **Exception** | None | RuntimeException | None |
+| **Log message** | None | Error log message | None |
+| **Result** | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F |
+| **Executed Date** | | | |
+| **Defect ID** | | | |
+
+---
+
+### 18. PasswordService - hashPassword
+
+**Code Module:** PasswordService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that password is hashed correctly using BCrypt
+
+**Method:** hashPassword  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 3 | 1 1 0 | 3 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 |
+|---|---|---|---|
+| **Condition** | | | |
+| **Precondition** | System is running<br>Valid password string | System is running<br>Password is null | System is running<br>Empty password string |
+| **Input: plainPassword** | Valid password string | null | "" |
+| **Confirm** | | | |
+| **Return** | Hashed string (BCrypt format)<br>Length > 0 | Exception thrown | Hashed string |
+| **Exception** | None | NullPointerException | None |
+| **Log message** | None | None or error log | None |
+| **Result** | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F |
+| **Executed Date** | | | |
+| **Defect ID** | | | |
+
+---
+
+### 19. PasswordService - verifyPassword
+
+**Code Module:** PasswordService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that password verification works correctly
+
+**Method:** verifyPassword  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 4 | 2 1 0 | 4 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 |
+|---|---|---|---|---|
+| **Condition** | | | | |
+| **Precondition** | System is running<br>Matching password and hash | System is running<br>Non-matching password and hash | System is running<br>plainPassword is null | System is running<br>hashedPassword is null |
+| **Input: plainPassword, hashedPassword** | plainPassword: "password123"<br>hashedPassword: "$2a$10$..." (matching hash) | plainPassword: "password123"<br>hashedPassword: "$2a$10$..." (non-matching hash) | plainPassword: null<br>hashedPassword: "$2a$10$..." | plainPassword: "password123"<br>hashedPassword: null |
+| **Confirm** | | | | |
+| **Return** | boolean = true | boolean = false | Exception thrown or false | Exception thrown or false |
+| **Exception** | None | None | NullPointerException or false | NullPointerException or false |
+| **Log message** | None | None | None or error log | None or error log |
+| **Result** | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | |
+| **Defect ID** | | | | |
+
+---
+
+### 20. EmailService - sendConfirmationEmail
+
+**Code Module:** EmailService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that confirmation email is sent correctly
+
+**Method:** sendConfirmationEmail  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 4 | 2 1 0 | 4 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 |
+|---|---|---|---|---|
+| **Condition** | | | | |
+| **Precondition** | Can connect with server<br>Valid user, contact, and password<br>Email template exists | Can connect with server<br>Valid user, contact, null password<br>Email template exists | Can connect with server<br>Email template not found | Can connect with server<br>User is null |
+| **Input: User, Contact, plainPassword** | User: valid User object<br>Contact: valid Contact object<br>plainPassword: "generatedPassword123" | User: valid User object<br>Contact: valid Contact object<br>plainPassword: null | User: valid User object<br>Contact: valid Contact object<br>plainPassword: "password123"<br>(template missing) | User: null<br>Contact: valid Contact object<br>plainPassword: "password123" |
+| **Confirm** | | | | |
+| **Return** | No exception thrown<br>Email content prepared | No exception thrown<br>Email content prepared (no password) | Exception thrown | Exception thrown |
+| **Exception** | None | None | RuntimeException("Email template not found") | NullPointerException |
+| **Log message** | "Email Content Prepared" | "Email Content Prepared" | Error log message | Error log message |
+| **Result** | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | |
+| **Defect ID** | | | | |
+
+---
+
+## Test Report Summary
+
+### Overall Statistics
+- **Total Methods:** 33
+- **Total Test Cases:** 108
+- **Passed:** 0
+- **Failed:** 0
+- **Untested:** 108
+
+### Test Coverage by Type
+- **Normal Test Cases:** 44
+- **Abnormal Test Cases:** 50
+- **Boundary Test Cases:** 14
+
+### Test Coverage by Module
+- **NotificationService:** 3 test cases
+- **HomepageService:** 11 test cases
+- **ContactService:** 4 test cases
+- **AuthService:** 8 test cases
+- **EngineerService:** 3 test cases
+- **EngineerSearchService:** 10 test cases
+- **ContactListService:** 8 test cases
+- **ProposalListService:** 4 test cases
+- **PasswordService:** 10 test cases
+- **EmailService:** 4 test cases
+- **ContractDetailService:** 16 test cases
+- **ContractListService:** 4 test cases
+- **ChangeRequestService:** 7 test cases
+- **ChangeRequestDetailService:** 16 test cases
+
+---
+
+### 21. ContractDetailService - getContractDetail
+
+**Code Module:** ContractDetailService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that contract detail (MSA or SOW) is retrieved correctly for client
+
+**Method:** getContractDetail  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 4 | 2 1 0 | 4 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 |
+|---|---|---|---|---|
+| **Condition** | | | | |
+| **Precondition** | Can connect with server<br>Valid contractId (MSA)<br>Valid clientUserId<br>Contract exists | Can connect with server<br>Valid contractId (SOW)<br>Valid clientUserId<br>Contract exists | Can connect with server<br>Non-existent contractId | Can connect with server<br>contractId belongs to different client |
+| **Input: contractId, clientUserId** | contractId: 1<br>clientUserId: 1 | contractId: 10<br>clientUserId: 1 | contractId: 99999<br>clientUserId: 1 | contractId: 5<br>clientUserId: 2 |
+| **Confirm** | | | | |
+| **Return** | ContractDetailDTO<br>contractType = "MSA"<br>id != null<br>status != null | ContractDetailDTO<br>contractType = "SOW"<br>id != null<br>status != null | Exception thrown | Exception thrown |
+| **Exception** | None | None | EntityNotFoundException | EntityNotFoundException |
+| **Log message** | None | None | None or error log | None or error log |
+| **Result** | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | N | A | A |
+| **Passed/Failed** | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | |
+| **Defect ID** | | | | |
+
+---
+
+### 22. ContractDetailService - approveContract
+
+**Code Module:** ContractDetailService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that contract approval works correctly for MSA and SOW contracts
+
+**Method:** approveContract  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 5 | 2 2 0 | 5 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 | UTCID05 |
+|---|---|---|---|---|---|
+| **Condition** | | | | | |
+| **Precondition** | Can connect with server<br>MSA contract with status "Under Review"<br>Valid clientUserId | Can connect with server<br>SOW contract with status "Under Review"<br>Valid clientUserId | Can connect with server<br>Contract already approved | Can connect with server<br>Contract status is "Terminated" | Can connect with server<br>Non-existent contractId |
+| **Input: contractId, clientUserId** | contractId: 1<br>clientUserId: 1 | contractId: 10<br>clientUserId: 1 | contractId: 2<br>clientUserId: 1 | contractId: 3<br>clientUserId: 1 | contractId: 99999<br>clientUserId: 1 |
+| **Confirm** | | | | | |
+| **Return** | No exception thrown<br>Contract status = "Approved"<br>History entry created | No exception thrown<br>Contract status = "Approved"<br>History entry created | Exception thrown | Exception thrown | Exception thrown |
+| **Exception** | None | None | IllegalStateException("Contract is already approved") | IllegalStateException("Contract cannot be approved in current status") | EntityNotFoundException |
+| **Log message** | None | None | None or error log | None or error log | None or error log |
+| **Result** | | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | N | A | A | A |
+| **Passed/Failed** | P/F | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | | |
+| **Defect ID** | | | | | |
+
+---
+
+### 23. ContractDetailService - addComment
+
+**Code Module:** ContractDetailService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that adding comment to contract changes status to Request for Change
+
+**Method:** addComment  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 4 | 2 1 0 | 4 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 |
+|---|---|---|---|---|
+| **Condition** | | | | |
+| **Precondition** | Can connect with server<br>MSA contract with status "Under Review"<br>Valid clientUserId | Can connect with server<br>SOW contract with status "Under Review"<br>Valid clientUserId | Can connect with server<br>Non-existent contractId | Can connect with server<br>comment is null |
+| **Input: contractId, clientUserId, comment** | contractId: 1<br>clientUserId: 1<br>comment: "Please review pricing" | contractId: 10<br>clientUserId: 1<br>comment: "Need to adjust timeline" | contractId: 99999<br>clientUserId: 1<br>comment: "Test comment" | contractId: 1<br>clientUserId: 1<br>comment: null |
+| **Confirm** | | | | |
+| **Return** | No exception thrown<br>Contract status = "Request for Change"<br>History entry created with comment | No exception thrown<br>Contract status = "Request for Change"<br>History entry created with comment | Exception thrown | Exception thrown or handled |
+| **Exception** | None | None | EntityNotFoundException | NullPointerException or handled |
+| **Log message** | None | None | None or error log | None or error log |
+| **Result** | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | N | A | A |
+| **Passed/Failed** | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | |
+| **Defect ID** | | | | |
+
+---
+
+### 24. ContractDetailService - cancelContract
+
+**Code Module:** ContractDetailService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that contract cancellation works correctly based on current status
+
+**Method:** cancelContract  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 5 | 2 2 0 | 5 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 | UTCID05 |
+|---|---|---|---|---|---|
+| **Condition** | | | | | |
+| **Precondition** | Can connect with server<br>MSA contract with status "Active"<br>Valid clientUserId | Can connect with server<br>MSA contract with status "Under Review"<br>Valid clientUserId | Can connect with server<br>Contract status is "Completed" | Can connect with server<br>Contract status is "Terminated" | Can connect with server<br>Non-existent contractId |
+| **Input: contractId, clientUserId, reason** | contractId: 1<br>clientUserId: 1<br>reason: "Client request" | contractId: 2<br>clientUserId: 1<br>reason: "Budget constraints" | contractId: 3<br>clientUserId: 1<br>reason: "Cancel request" | contractId: 4<br>clientUserId: 1<br>reason: "Cancel request" | contractId: 99999<br>clientUserId: 1<br>reason: "Test" |
+| **Confirm** | | | | | |
+| **Return** | No exception thrown<br>Contract status = "Pending"<br>History entry created | No exception thrown<br>Contract status = "Cancelled"<br>History entry created | Exception thrown | Exception thrown | Exception thrown |
+| **Exception** | None | None | IllegalStateException("Completed contract cannot be cancelled") | IllegalStateException("Contract is already cancelled/terminated") | EntityNotFoundException |
+| **Log message** | None | None | None or error log | None or error log | None or error log |
+| **Result** | | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | N | A | A | A |
+| **Passed/Failed** | P/F | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | | |
+| **Defect ID** | | | | | |
+
+---
+
+### 25. ContractListService - getContracts
+
+**Code Module:** ContractListService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that contracts are retrieved with search, filter, and pagination
+
+**Method:** getContracts  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 4 | 2 1 0 | 4 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 |
+|---|---|---|---|---|
+| **Condition** | | | | |
+| **Precondition** | Can connect with server<br>Valid clientUserId<br>Contracts exist | Can connect with server<br>Valid clientUserId<br>No contracts exist | Can connect with server<br>clientUserId is null | Can connect with server<br>page = 0, size = 1 |
+| **Input: clientUserId, search, status, type, page, size** | clientUserId: 1<br>search: ""<br>status: "All"<br>type: "All"<br>page: 0<br>size: 20 | clientUserId: 1<br>search: "NonExistent"<br>status: "All"<br>type: "All"<br>page: 0<br>size: 20 | clientUserId: null<br>search: ""<br>status: "All"<br>type: "All"<br>page: 0<br>size: 20 | clientUserId: 1<br>search: ""<br>status: "All"<br>type: "All"<br>page: 0<br>size: 1 |
+| **Confirm** | | | | |
+| **Return** | ContractListResponse<br>contracts != null<br>totalElements > 0 | ContractListResponse<br>contracts = empty list<br>totalElements = 0 | Exception thrown | ContractListResponse<br>contracts.size() <= 1 |
+| **Exception** | None | None | NullPointerException or IllegalArgumentException | None |
+| **Log message** | None | None | None or error log | None |
+| **Result** | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | |
+| **Defect ID** | | | | |
+
+---
+
+### 26. ChangeRequestService - createChangeRequest
+
+**Code Module:** ChangeRequestService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that change request is created correctly with status "Processing"
+
+**Method:** createChangeRequest  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 4 | 2 1 0 | 4 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 |
+|---|---|---|---|---|
+| **Condition** | | | | |
+| **Precondition** | Can connect with server<br>Valid contractId (MSA)<br>Valid clientUserId<br>Valid request data | Can connect with server<br>Valid contractId (SOW Fixed Price)<br>Valid clientUserId<br>Valid CR type | Can connect with server<br>Invalid CR type for contract | Can connect with server<br>Non-existent contractId |
+| **Input: contractId, clientUserId, CreateChangeRequestRequest, attachments** | contractId: 1<br>clientUserId: 1<br>title: "Add Feature"<br>type: "Other"<br>description: "Add new feature"<br>reason: "Client request"<br>desiredStartDate: "2025-06-01"<br>desiredEndDate: "2025-07-31"<br>expectedExtraCost: 500000<br>attachments: [] | contractId: 10<br>clientUserId: 1<br>title: "Add Scope"<br>type: "Add Scope"<br>description: "Add new module"<br>reason: "Business need"<br>desiredStartDate: "2025-08-01"<br>desiredEndDate: "2025-09-30"<br>expectedExtraCost: 800000<br>attachments: [] | contractId: 10<br>clientUserId: 1<br>title: "Invalid CR"<br>type: "Extend Schedule"<br>description: "Test"<br>reason: "Test"<br>desiredStartDate: null<br>desiredEndDate: null<br>expectedExtraCost: null<br>attachments: [] | contractId: 99999<br>clientUserId: 1<br>title: "Test"<br>type: "Other"<br>description: "Test"<br>reason: "Test"<br>desiredStartDate: null<br>desiredEndDate: null<br>expectedExtraCost: null<br>attachments: [] |
+| **Confirm** | | | | |
+| **Return** | ChangeRequestResponse<br>success = true<br>changeRequestId != null<br>status = "Processing" | ChangeRequestResponse<br>success = true<br>changeRequestId != null<br>status = "Processing" | Exception thrown | Exception thrown |
+| **Exception** | None | None | IllegalArgumentException("CR Type is not valid") | EntityNotFoundException |
+| **Log message** | None | None | None or error log | None or error log |
+| **Result** | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | N | A | A |
+| **Passed/Failed** | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | |
+| **Defect ID** | | | | |
+
+---
+
+### 27. ChangeRequestService - saveChangeRequestDraft
+
+**Code Module:** ChangeRequestService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that change request is saved as draft with status "Draft"
+
+**Method:** saveChangeRequestDraft  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 3 | 1 1 0 | 3 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 |
+|---|---|---|
+| **Condition** | | | |
+| **Precondition** | Can connect with server<br>Valid contractId<br>Valid clientUserId<br>Partial request data (draft) | Can connect with server<br>Non-existent contractId | Can connect with server<br>All fields null (empty draft) |
+| **Input: contractId, clientUserId, CreateChangeRequestRequest, attachments** | contractId: 1<br>clientUserId: 1<br>title: "Draft CR"<br>type: null<br>description: null<br>reason: null<br>desiredStartDate: null<br>desiredEndDate: null<br>expectedExtraCost: null<br>attachments: [] | contractId: 99999<br>clientUserId: 1<br>title: null<br>type: null<br>description: null<br>reason: null<br>desiredStartDate: null<br>desiredEndDate: null<br>expectedExtraCost: null<br>attachments: [] | contractId: 1<br>clientUserId: 1<br>title: null<br>type: null<br>description: null<br>reason: null<br>desiredStartDate: null<br>desiredEndDate: null<br>expectedExtraCost: null<br>attachments: [] |
+| **Confirm** | | | | |
+| **Return** | ChangeRequestResponse<br>success = true<br>changeRequestId != null<br>status = "Draft" | Exception thrown | ChangeRequestResponse<br>success = true<br>changeRequestId != null<br>status = "Draft" |
+| **Exception** | None | EntityNotFoundException | None |
+| **Log message** | None | None or error log | None |
+| **Result** | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A | B |
+| **Passed/Failed** | P/F | P/F | P/F |
+| **Executed Date** | | | |
+| **Defect ID** | | | |
+
+---
+
+### 28. ChangeRequestDetailService - getChangeRequestDetail
+
+**Code Module:** ChangeRequestDetailService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that detailed change request information is retrieved correctly
+
+**Method:** getChangeRequestDetail  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 3 | 1 1 0 | 3 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 |
+|---|---|---|
+| **Condition** | | | |
+| **Precondition** | Can connect with server<br>Valid contractId<br>Valid changeRequestId<br>Valid clientUserId | Can connect with server<br>Non-existent changeRequestId | Can connect with server<br>changeRequestId belongs to different contract |
+| **Input: contractId, changeRequestId, clientUserId** | contractId: 1<br>changeRequestId: 1<br>clientUserId: 1 | contractId: 1<br>changeRequestId: 99999<br>clientUserId: 1 | contractId: 1<br>changeRequestId: 5<br>clientUserId: 1 |
+| **Confirm** | | | | |
+| **Return** | ChangeRequestDetailDTO<br>id != null<br>title != null<br>status != null<br>createdBy != null | Exception thrown | Exception thrown |
+| **Exception** | None | EntityNotFoundException | EntityNotFoundException |
+| **Log message** | None | None or  error log| None or error log |
+| **Result** | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A | A |
+| **Passed/Failed** | P/F | P/F | P/F |
+| **Executed Date** | | | |
+| **Defect ID** | | | |
+
+---
+
+### 29. ChangeRequestDetailService - updateChangeRequest
+
+**Code Module:** ChangeRequestDetailService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that change request is updated correctly (Draft status only)
+
+**Method:** updateChangeRequest  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 4 | 1 2 0 | 4 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 |
+|---|---|---|---|---|
+| **Condition** | | | | |
+| **Precondition** | Can connect with server<br>Change request with status "Draft"<br>Valid clientUserId | Can connect with server<br>Change request with status "Under Review" | Can connect with server<br>Non-existent changeRequestId | Can connect with server<br>UpdateChangeRequestRequest is null |
+| **Input: contractId, changeRequestId, clientUserId, UpdateChangeRequestRequest** | contractId: 1<br>changeRequestId: 1<br>clientUserId: 1<br>title: "Updated Title"<br>type: "Other"<br>description: "Updated description"<br>reason: "Updated reason"<br>desiredStartDate: "2025-07-01"<br>desiredEndDate: "2025-08-31"<br>expectedExtraCost: 600000 | contractId: 1<br>changeRequestId: 2<br>clientUserId: 1<br>title: "Test"<br>type: null<br>description: null<br>reason: null<br>desiredStartDate: null<br>desiredEndDate: null<br>expectedExtraCost: null | contractId: 1<br>changeRequestId: 99999<br>clientUserId: 1<br>title: "Test"<br>type: null<br>description: null<br>reason: null<br>desiredStartDate: null<br>desiredEndDate: null<br>expectedExtraCost: null | contractId: 1<br>changeRequestId: 1<br>clientUserId: 1<br>request: null |
+| **Confirm** | | | | |
+| **Return** | No exception thrown<br>Change request updated | Exception thrown | Exception thrown | Exception thrown or handled |
+| **Exception** | None | IllegalStateException("Only Draft change requests can be updated") | EntityNotFoundException | NullPointerException or handled |
+| **Log message** | None | None or error log | None or error log | None or error log |
+| **Result** | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A | A | A |
+| **Passed/Failed** | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | |
+| **Defect ID** | | | | |
+
+---
+
+### 30. ChangeRequestDetailService - submitChangeRequest
+
+**Code Module:** ChangeRequestDetailService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that change request is submitted (Draft -> Under Review)
+
+**Method:** submitChangeRequest  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 3 | 1 1 0 | 3 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 |
+|---|---|---|
+| **Condition** | | | |
+| **Precondition** | Can connect with server<br>Change request with status "Draft"<br>Valid clientUserId | Can connect with server<br>Change request with status "Under Review" | Can connect with server<br>Non-existent changeRequestId |
+| **Input: contractId, changeRequestId, clientUserId** | contractId: 1<br>changeRequestId: 1<br>clientUserId: 1 | contractId: 1<br>changeRequestId: 2<br>clientUserId: 1 | contractId: 1<br>changeRequestId: 99999<br>clientUserId: 1 |
+| **Confirm** | | | | |
+| **Return** | No exception thrown<br>Change request status = "Under Review"<br>History entry created | Exception thrown | Exception thrown |
+| **Exception** | None | IllegalStateException("Only Draft change requests can be submitted") | EntityNotFoundException |
+| **Log message** | None | None or error log | None or error log |
+| **Result** | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A | A |
+| **Passed/Failed** | P/F | P/F | P/F |
+| **Executed Date** | | | |
+| **Defect ID** | | | |
+
+---
+
+### 31. ChangeRequestDetailService - approveChangeRequest
+
+**Code Module:** ChangeRequestDetailService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that change request is approved (Under Review -> Active)
+
+**Method:** approveChangeRequest  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 3 | 1 1 0 | 3 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 |
+|---|---|---|
+| **Condition** | | | |
+| **Precondition** | Can connect with server<br>Change request with status "Under Review"<br>Valid clientUserId | Can connect with server<br>Change request with status "Draft" | Can connect with server<br>Non-existent changeRequestId |
+| **Input: contractId, changeRequestId, clientUserId** | contractId: 1<br>changeRequestId: 1<br>clientUserId: 1 | contractId: 1<br>changeRequestId: 2<br>clientUserId: 1 | contractId: 1<br>changeRequestId: 99999<br>clientUserId: 1 |
+| **Confirm** | | | | |
+| **Return** | No exception thrown<br>Change request status = "Active"<br>History entry created | Exception thrown | Exception thrown |
+| **Exception** | None | IllegalStateException("Only Under Review change requests can be approved") | EntityNotFoundException |
+| **Log message** | None | None or error log | None or error log |
+| **Result** | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A | A |
+| **Passed/Failed** | P/F | P/F | P/F |
+| **Executed Date** | | | |
+| **Defect ID** | | | |
+
+---
+
+### 32. ChangeRequestDetailService - requestForChange
+
+**Code Module:** ChangeRequestDetailService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that request for change works correctly (Under Review -> Request for Change)
+
+**Method:** requestForChange  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 4 | 2 1 0 | 4 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 | UTCID04 |
+|---|---|---|---|---|
+| **Condition** | | | | |
+| **Precondition** | Can connect with server<br>Change request with status "Under Review"<br>Valid clientUserId<br>Message provided | Can connect with server<br>Change request with status "Under Review"<br>Valid clientUserId<br>Message is null | Can connect with server<br>Change request with status "Draft" | Can connect with server<br>Non-existent changeRequestId |
+| **Input: contractId, changeRequestId, clientUserId, message** | contractId: 1<br>changeRequestId: 1<br>clientUserId: 1<br>message: "Please review pricing" | contractId: 1<br>changeRequestId: 1<br>clientUserId: 1<br>message: null | contractId: 1<br>changeRequestId: 2<br>clientUserId: 1<br>message: "Test" | contractId: 1<br>changeRequestId: 99999<br>clientUserId: 1<br>message: "Test" |
+| **Confirm** | | | | |
+| **Return** | No exception thrown<br>Change request status = "Request for Change"<br>History entry created with message | No exception thrown<br>Change request status = "Request for Change"<br>History entry created | Exception thrown | Exception thrown |
+| **Exception** | None | None | IllegalStateException("Only Under Review change requests can be requested for change") | EntityNotFoundException |
+| **Log message** | None | None | None or error log | None or error log |
+| **Result** | | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | N | A | A |
+| **Passed/Failed** | P/F | P/F | P/F | P/F |
+| **Executed Date** | | | | |
+| **Defect ID** | | | | |
+
+---
+
+### 33. ChangeRequestDetailService - terminateChangeRequest
+
+**Code Module:** ChangeRequestDetailService  
+**Created By:** [Tên người tạo]  
+**Test requirement:** Verify that change request termination works correctly
+
+**Method:** terminateChangeRequest  
+**Executed By:** [Tên người thực thi]
+
+#### Test Case Summary
+| Passed | Failed | Untested | N/A/B (Normal/Abnormal/Boundary) | Total Test Cases |
+|--------|--------|----------|----------------------------------|-----------------|
+| 0 | 0 | 3 | 1 1 0 | 3 |
+
+#### Test Case Details
+
+| | UTCID01 | UTCID02 | UTCID03 |
+|---|---|---|
+| **Condition** | | | |
+| **Precondition** | Can connect with server<br>Change request with any status<br>Valid clientUserId | Can connect with server<br>Non-existent changeRequestId | Can connect with server<br>changeRequestId belongs to different contract |
+| **Input: contractId, changeRequestId, clientUserId** | contractId: 1<br>changeRequestId: 1<br>clientUserId: 1 | contractId: 1<br>changeRequestId: 99999<br>clientUserId: 1 | contractId: 1<br>changeRequestId: 5<br>clientUserId: 1 |
+| **Confirm** | | | | |
+| **Return** | No exception thrown<br>Change request status = "Terminated"<br>History entry created | Exception thrown | Exception thrown |
+| **Exception** | None | EntityNotFoundException | EntityNotFoundException |
+| **Log message** | None | None or error log | None or error log |
+| **Result** | | | |
+| **Type(N: Normal, A: Abnormal, B: Boundary)** | N | A | A |
+| **Passed/Failed** | P/F | P/F | P/F |
+| **Executed Date** | | | |
+| **Defect ID** | | | |
+
+---
+
+## Notes
+
+1. All test cases are currently marked as "Untested" and need to be executed.
+2. "Passed/Failed" status should be updated after test execution.
+3. "Executed Date" should be filled in after test execution.
+4. "Defect ID" should be filled in if any defects are found during testing.
+5. Test cases follow the guideline:
+   - **Normal (N):** Values used mainly and usually to ensure the function works
+   - **Boundary (B):** Limited values that contain upper and lower values
+   - **Abnormal (A):** Non-expected values, normally processes exception cases
+6. Each test case includes:
+   - **Condition:** Precondition and input values
+   - **Confirm:** Expected return, exception, and log message
+   - **Result:** Type, Passed/Failed status, Executed Date, and Defect ID

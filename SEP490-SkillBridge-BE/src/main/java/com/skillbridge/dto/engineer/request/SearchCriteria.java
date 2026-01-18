@@ -1,0 +1,133 @@
+package com.skillbridge.dto.engineer.request;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+public class SearchCriteria {
+    private String query;
+    private List<String> skills;
+    private List<String> languages;
+    private Integer experienceMin;
+    private Integer experienceMax;
+    private List<String> seniority;
+    private List<String> location;
+    private BigDecimal salaryMin;
+    private BigDecimal salaryMax;
+    private Boolean availability;
+    private Integer page;
+    private Integer size;
+    private String sortBy;
+
+    public SearchCriteria() {
+        this.page = 0;
+        this.size = 20;
+        this.sortBy = "relevance";
+        this.availability = true;
+    }
+
+    // Getters and Setters
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public List<String> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<String> skills) {
+        this.skills = skills;
+    }
+
+    public List<String> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(List<String> languages) {
+        this.languages = languages;
+    }
+
+    public Integer getExperienceMin() {
+        return experienceMin;
+    }
+
+    public void setExperienceMin(Integer experienceMin) {
+        this.experienceMin = experienceMin;
+    }
+
+    public Integer getExperienceMax() {
+        return experienceMax;
+    }
+
+    public void setExperienceMax(Integer experienceMax) {
+        this.experienceMax = experienceMax;
+    }
+
+    public List<String> getSeniority() {
+        return seniority;
+    }
+
+    public void setSeniority(List<String> seniority) {
+        this.seniority = seniority;
+    }
+
+    public List<String> getLocation() {
+        return location;
+    }
+
+    public void setLocation(List<String> location) {
+        this.location = location;
+    }
+
+    public BigDecimal getSalaryMin() {
+        return salaryMin;
+    }
+
+    public void setSalaryMin(BigDecimal salaryMin) {
+        this.salaryMin = salaryMin;
+    }
+
+    public BigDecimal getSalaryMax() {
+        return salaryMax;
+    }
+
+    public void setSalaryMax(BigDecimal salaryMax) {
+        this.salaryMax = salaryMax;
+    }
+
+    public Boolean getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(Boolean availability) {
+        this.availability = availability;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public String getSortBy() {
+        return sortBy;
+    }
+
+    public void setSortBy(String sortBy) {
+        this.sortBy = sortBy;
+    }
+}
+

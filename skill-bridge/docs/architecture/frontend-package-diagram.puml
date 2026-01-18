@@ -1,0 +1,61 @@
+@startuml
+' Frontend package diagram (Next.js SoC overview)
+title Frontend Package Diagram (Next.js SoC)
+
+package "app (Next.js routes)" as App {
+  package "admin" {}
+  package "client" {}
+  package "sales" {}
+  package "shared pages/layout" {}
+}
+
+package "components" as Components {
+  package "ui (design system)" {}
+  package "feature modules" {}
+  package "layout/navigation" {}
+}
+
+package "contexts" as Contexts
+package "hooks" as Hooks
+package "services (API clients)" as Services
+package "lib (config/i18n/utils)" as Lib
+package "types (DTOs)" as Types
+package "styles (globals.css)" as Styles
+
+App ..> Components : renders
+App ..> Contexts : providers
+App ..> Hooks : client-side helpers
+App ..> Services : data fetching (server/client)
+App ..> Lib : config/utils
+App ..> Types : typing
+App ..> Styles : global styles
+
+Components ..> Hooks
+Components ..> Contexts
+Components ..> Lib
+Components ..> Types
+Components ..> Styles
+
+Contexts ..> Services
+Contexts ..> Hooks
+Contexts ..> Lib
+Contexts ..> Types
+
+Hooks ..> Lib
+Hooks ..> Types
+
+Services ..> Lib
+Services ..> Types
+
+Lib ..> Types
+
+legend left
+  This diagram summarizes Next.js frontend SoC:
+  - app: route segments, layouts, server/client components
+  - components: reusable UI + feature modules
+  - contexts/hooks: cross-cutting state & client utilities
+  - services: API adapters; lib: config/i18n/helpers; types: DTOs
+endlegend
+
+@enduml
+

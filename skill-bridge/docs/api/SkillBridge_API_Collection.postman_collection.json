@@ -1,0 +1,1067 @@
+{
+	"info": {
+		"_postman_id": "skillbridge-api-collection",
+		"name": "SkillBridge API Collection",
+		"description": "Complete API collection for SkillBridge backend endpoints with sample requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080/api",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"skillbridgetest@gmail.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "login"]
+						},
+						"description": "Login endpoint to authenticate user and get JWT token"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "logout"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"skillbridgetest@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/forgot-password",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "forgot-password"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Public APIs",
+			"item": [
+				{
+					"name": "Homepage",
+					"item": [
+						{
+							"name": "Get Homepage Statistics",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{baseUrl}}/public/homepage/statistics",
+									"host": ["{{baseUrl}}"],
+									"path": ["public", "homepage", "statistics"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Homepage Engineers",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{baseUrl}}/public/homepage/engineers",
+									"host": ["{{baseUrl}}"],
+									"path": ["public", "homepage", "engineers"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Engineers by Category",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{baseUrl}}/public/homepage/engineers/:category",
+									"host": ["{{baseUrl}}"],
+									"path": ["public", "homepage", "engineers", ":category"],
+									"variable": [
+										{
+											"key": "category",
+											"value": "backend"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Engineers",
+					"item": [
+						{
+							"name": "Search Engineers",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{baseUrl}}/public/engineers/search?query=java&skills=Spring&experienceMin=3&experienceMax=10&page=0&size=20",
+									"host": ["{{baseUrl}}"],
+									"path": ["public", "engineers", "search"],
+									"query": [
+										{
+											"key": "query",
+											"value": "java"
+										},
+										{
+											"key": "skills",
+											"value": "Spring"
+										},
+										{
+											"key": "experienceMin",
+											"value": "3"
+										},
+										{
+											"key": "experienceMax",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Engineer Detail",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{baseUrl}}/public/engineers/:id",
+									"host": ["{{baseUrl}}"],
+									"path": ["public", "engineers", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Available Skills",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{baseUrl}}/public/engineers/filters/skills",
+									"host": ["{{baseUrl}}"],
+									"path": ["public", "engineers", "filters", "skills"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Available Locations",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{baseUrl}}/public/engineers/filters/locations",
+									"host": ["{{baseUrl}}"],
+									"path": ["public", "engineers", "filters", "locations"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Available Seniorities",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "{{baseUrl}}/public/engineers/filters/seniorities",
+									"host": ["{{baseUrl}}"],
+									"path": ["public", "engineers", "filters", "seniorities"]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Contact Form",
+					"item": [
+						{
+							"name": "Submit Contact Form",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"companyName\": \"ABC Corporation\",\n  \"contactPerson\": \"John Doe\",\n  \"email\": \"john.doe@abc.com\",\n  \"phone\": \"+81-90-1234-5678\",\n  \"message\": \"We are interested in your services.\",\n  \"projectType\": \"Web Development\",\n  \"budget\": \"5000000\",\n  \"timeline\": \"3 months\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/public/contact/submit",
+									"host": ["{{baseUrl}}"],
+									"path": ["public", "contact", "submit"]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Client - Contacts",
+			"item": [
+				{
+					"name": "Get Contacts List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/client/contacts?search=&status=All&page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contacts"],
+							"query": [
+								{
+									"key": "search",
+									"value": ""
+								},
+								{
+									"key": "status",
+									"value": "All"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Contact",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"companyName\": \"New Company Inc\",\n  \"contactPerson\": \"Jane Smith\",\n  \"email\": \"jane@newcompany.com\",\n  \"phone\": \"+81-90-9876-5432\",\n  \"message\": \"Interested in your services\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/client/contacts",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contacts"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contact Detail",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/client/contacts/:contactId",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contacts", ":contactId"],
+							"variable": [
+								{
+									"key": "contactId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Communication Log",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"Followed up on proposal\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/client/contacts/:contactId/logs",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contacts", ":contactId", "logs"],
+							"variable": [
+								{
+									"key": "contactId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Proposal",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/client/contacts/:contactId/proposal/approve",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contacts", ":contactId", "proposal", "approve"],
+							"variable": [
+								{
+									"key": "contactId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Proposal Comment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"Please revise the proposal with updated requirements\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/client/contacts/:contactId/proposal/comment",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contacts", ":contactId", "proposal", "comment"],
+							"variable": [
+								{
+									"key": "contactId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Consultation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reason\": \"Project cancelled by client\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/client/contacts/:contactId/cancel",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contacts", ":contactId", "cancel"],
+							"variable": [
+								{
+									"key": "contactId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Client - Proposals",
+			"item": [
+				{
+					"name": "Get Proposals List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/client/proposals?search=&status=All&page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "proposals"],
+							"query": [
+								{
+									"key": "search",
+									"value": ""
+								},
+								{
+									"key": "status",
+									"value": "All"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Client - Contracts",
+			"item": [
+				{
+					"name": "Get Contracts List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/client/contracts?search=&status=All&type=All&page=0&size=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contracts"],
+							"query": [
+								{
+									"key": "search",
+									"value": ""
+								},
+								{
+									"key": "status",
+									"value": "All"
+								},
+								{
+									"key": "type",
+									"value": "All"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contract Detail",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/client/contracts/:contractId",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contracts", ":contractId"],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Contract",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/client/contracts/:contractId/approve",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contracts", ":contractId", "approve"],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Comment (Request for Change)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"comment\": \"Please update the contract terms as discussed\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/client/contracts/:contractId/comment",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contracts", ":contractId", "comment"],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Contract",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reason\": \"Project requirements changed\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/client/contracts/:contractId/cancel",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contracts", ":contractId", "cancel"],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Client - Change Requests",
+			"item": [
+				{
+					"name": "Create Change Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Add New Feature",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "Add Scope",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Add user authentication feature",
+									"type": "text"
+								},
+								{
+									"key": "reason",
+									"value": "Client requested new feature",
+									"type": "text"
+								},
+								{
+									"key": "desiredStartDate",
+									"value": "2025/01/15",
+									"type": "text"
+								},
+								{
+									"key": "desiredEndDate",
+									"value": "2025/02/15",
+									"type": "text"
+								},
+								{
+									"key": "expectedExtraCost",
+									"value": "500000",
+									"type": "text"
+								},
+								{
+									"key": "attachments",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/client/contracts/:contractId/change-requests",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contracts", ":contractId", "change-requests"],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Change Request as Draft",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Draft Change Request",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "Other",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Work in progress",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/client/contracts/:contractId/change-requests/draft",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contracts", ":contractId", "change-requests", "draft"],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Change Request Detail",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/client/contracts/:contractId/change-requests/:changeRequestId",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contracts", ":contractId", "change-requests", ":changeRequestId"],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "1"
+								},
+								{
+									"key": "changeRequestId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Change Request (Draft only)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Updated Change Request Title\",\n  \"type\": \"Add Scope\",\n  \"description\": \"Updated description\",\n  \"reason\": \"Updated reason\",\n  \"desiredStartDate\": \"2025/01/20\",\n  \"desiredEndDate\": \"2025/02/20\",\n  \"expectedExtraCost\": 600000\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/client/contracts/:contractId/change-requests/:changeRequestId",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contracts", ":contractId", "change-requests", ":changeRequestId"],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "1"
+								},
+								{
+									"key": "changeRequestId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit Change Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/client/contracts/:contractId/change-requests/:changeRequestId/submit",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contracts", ":contractId", "change-requests", ":changeRequestId", "submit"],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "1"
+								},
+								{
+									"key": "changeRequestId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Change Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/client/contracts/:contractId/change-requests/:changeRequestId/approve",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contracts", ":contractId", "change-requests", ":changeRequestId", "approve"],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "1"
+								},
+								{
+									"key": "changeRequestId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request for Change",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"Please review and update the change request details\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/client/contracts/:contractId/change-requests/:changeRequestId/request-for-change",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contracts", ":contractId", "change-requests", ":changeRequestId", "request-for-change"],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "1"
+								},
+								{
+									"key": "changeRequestId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Terminate Change Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/client/contracts/:contractId/change-requests/:changeRequestId/terminate",
+							"host": ["{{baseUrl}}"],
+							"path": ["client", "contracts", ":contractId", "change-requests", ":changeRequestId", "terminate"],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "1"
+								},
+								{
+									"key": "changeRequestId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
+

@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3307/skillbridge_dev?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: skillbridge_dev
+    password: dev_password123
+    
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    
+logging:
+  level:
+    com.skillbridge: DEBUG
+    org.springframework.web: DEBUG

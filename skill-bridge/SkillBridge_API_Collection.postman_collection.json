@@ -1,0 +1,1854 @@
+{
+	"info": {
+		"_postman_id": "skillbridge-api-collection",
+		"name": "SkillBridge API Collection",
+		"description": "Complete API collection for SkillBridge system\nBase URL: https://api.skill-bridge.dev.inisoft.vn/api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Authentication",
+			"item": [
+				{
+					"name": "Client Auth",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"client@example.com\",\n  \"password\": \"password123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/login",
+									"host": ["{{base_url}}"],
+									"path": ["auth", "login"]
+								},
+								"description": "Login for client users"
+							},
+							"response": []
+						},
+						{
+							"name": "Forgot Password",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"client@example.com\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/forgot-password",
+									"host": ["{{base_url}}"],
+									"path": ["auth", "forgot-password"]
+								},
+								"description": "Request password reset"
+							},
+							"response": []
+						},
+						{
+							"name": "Reset Password",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"token\": \"reset-token\",\n  \"newPassword\": \"newpassword123\",\n  \"confirmPassword\": \"newpassword123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/reset-password",
+									"host": ["{{base_url}}"],
+									"path": ["auth", "reset-password"]
+								},
+								"description": "Reset password with token"
+							},
+							"response": []
+						},
+						{
+							"name": "Change Password",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"currentPassword\": \"oldpassword123\",\n  \"newPassword\": \"newpassword123\",\n  \"confirmPassword\": \"newpassword123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/change-password",
+									"host": ["{{base_url}}"],
+									"path": ["auth", "change-password"]
+								},
+								"description": "Change password for authenticated user"
+							},
+							"response": []
+						},
+						{
+							"name": "Logout",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/auth/logout",
+									"host": ["{{base_url}}"],
+									"path": ["auth", "logout"]
+								},
+								"description": "Logout user"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sales Auth",
+					"item": [
+						{
+							"name": "Sales Login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"sales@example.com\",\n  \"password\": \"password123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/sales/auth/login",
+									"host": ["{{base_url}}"],
+									"path": ["sales", "auth", "login"]
+								},
+								"description": "Login for Sales users (SALES_MANAGER or SALES_REP)"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Admin Auth",
+					"item": [
+						{
+							"name": "Admin Login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/auth/login",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "auth", "login"]
+								},
+								"description": "Login for Admin users"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "2. Client APIs",
+			"item": [
+				{
+					"name": "Client Contacts",
+					"item": [
+						{
+							"name": "Get Contacts List",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/client/contacts?search=&status=All&page=0&size=20",
+									"host": ["{{base_url}}"],
+									"path": ["client", "contacts"],
+									"query": [
+										{
+											"key": "search",
+											"value": "",
+											"description": "Search query (optional)"
+										},
+										{
+											"key": "status",
+											"value": "All",
+											"description": "Status filter: All, New, In Progress, etc."
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"description": "Page number (0-based)"
+										},
+										{
+											"key": "size",
+											"value": "20",
+											"description": "Page size"
+										}
+									]
+								},
+								"description": "Get paginated list of contacts for authenticated client"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Contact",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"New Project Inquiry\",\n  \"description\": \"I need help with a new project\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/client/contacts",
+									"host": ["{{base_url}}"],
+									"path": ["client", "contacts"]
+								},
+								"description": "Create a new contact request"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Contact Detail",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/client/contacts/:contactId",
+									"host": ["{{base_url}}"],
+									"path": ["client", "contacts", ":contactId"],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Get contact detail by ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Add Communication Log",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"message\": \"Follow up message\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/client/contacts/:contactId/communication-logs",
+									"host": ["{{base_url}}"],
+									"path": ["client", "contacts", ":contactId", "communication-logs"],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Add communication log to contact"
+							},
+							"response": []
+						},
+						{
+							"name": "Add Proposal Comment",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"message\": \"Need some changes to the proposal\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/client/contacts/:contactId/proposal-comments",
+									"host": ["{{base_url}}"],
+									"path": ["client", "contacts", ":contactId", "proposal-comments"],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Add proposal comment"
+							},
+							"response": []
+						},
+						{
+							"name": "Approve Proposal",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/client/contacts/:contactId/approve-proposal",
+									"host": ["{{base_url}}"],
+									"path": ["client", "contacts", ":contactId", "approve-proposal"],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Approve proposal for contact"
+							},
+							"response": []
+						},
+						{
+							"name": "Cancel Consultation",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"reason\": \"No longer needed\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/client/contacts/:contactId/cancel",
+									"host": ["{{base_url}}"],
+									"path": ["client", "contacts", ":contactId", "cancel"],
+									"variable": [
+										{
+											"key": "contactId",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Cancel consultation"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Client Proposals",
+					"item": [
+						{
+							"name": "Get Proposals List",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/client/proposals?search=&status=All&page=0&size=20",
+									"host": ["{{base_url}}"],
+									"path": ["client", "proposals"],
+									"query": [
+										{
+											"key": "search",
+											"value": "",
+											"description": "Search query (optional)"
+										},
+										{
+											"key": "status",
+											"value": "All",
+											"description": "Status filter: All, Under review, Request for change, Approved"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										}
+									]
+								},
+								"description": "Get paginated list of proposals for authenticated client"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Proposal Detail",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/client/proposals/:proposalId",
+									"host": ["{{base_url}}"],
+									"path": ["client", "proposals", ":proposalId"],
+									"variable": [
+										{
+											"key": "proposalId",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Get proposal detail by ID"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Client Contracts",
+					"item": [
+						{
+							"name": "Get Contracts List",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/client/contracts?search=&status=All&page=0&size=20",
+									"host": ["{{base_url}}"],
+									"path": ["client", "contracts"],
+									"query": [
+										{
+											"key": "search",
+											"value": ""
+										},
+										{
+											"key": "status",
+											"value": "All"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										}
+									]
+								},
+								"description": "Get paginated list of contracts for authenticated client"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Contract Detail",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/client/contracts/:contractId",
+									"host": ["{{base_url}}"],
+									"path": ["client", "contracts", ":contractId"],
+									"variable": [
+										{
+											"key": "contractId",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Get contract detail by ID"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Client Dashboard",
+					"item": [
+						{
+							"name": "Get Dashboard Data",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/client/dashboard",
+									"host": ["{{base_url}}"],
+									"path": ["client", "dashboard"]
+								},
+								"description": "Get dashboard data for authenticated client"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Client Documents",
+					"item": [
+						{
+							"name": "Get Documents List",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/client/documents?page=0&size=20",
+									"host": ["{{base_url}}"],
+									"path": ["client", "documents"],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										}
+									]
+								},
+								"description": "Get paginated list of documents for authenticated client"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Client Change Requests",
+					"item": [
+						{
+							"name": "Get Change Requests List",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/client/change-requests?contractId=1&page=0&size=20",
+									"host": ["{{base_url}}"],
+									"path": ["client", "change-requests"],
+									"query": [
+										{
+											"key": "contractId",
+											"value": "1"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										}
+									]
+								},
+								"description": "Get paginated list of change requests for contract"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Change Request Detail",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{client_token}}"
+									},
+									{
+										"key": "X-User-Id",
+										"value": "1"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/client/change-requests/:changeRequestId",
+									"host": ["{{base_url}}"],
+									"path": ["client", "change-requests", ":changeRequestId"],
+									"variable": [
+										{
+											"key": "changeRequestId",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Get change request detail by ID"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "3. Sales APIs",
+			"item": [
+				{
+					"name": "Sales Contacts",
+					"item": [
+						{
+							"name": "Get Contacts List",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sales_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/sales/contacts?search=&status=&assigneeUserId=&page=0&size=20",
+									"host": ["{{base_url}}"],
+									"path": ["sales", "contacts"],
+									"query": [
+										{
+											"key": "search",
+											"value": ""
+										},
+										{
+											"key": "status",
+											"value": "",
+											"description": "Filter by status (can be multiple)"
+										},
+										{
+											"key": "assigneeUserId",
+											"value": ""
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										}
+									]
+								},
+								"description": "Get paginated list of contacts for Sales users"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Contact Detail",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sales_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/sales/contacts/:id",
+									"host": ["{{base_url}}"],
+									"path": ["sales", "contacts", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Get contact detail by ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Contact",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sales_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"status\": \"In Progress\",\n  \"internalNote\": \"Updated note\",\n  \"onlineMtgLink\": \"https://meet.google.com/xxx\",\n  \"onlineMtgDateTime\": \"2025/12/15 14:30\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/sales/contacts/:id",
+									"host": ["{{base_url}}"],
+									"path": ["sales", "contacts", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Update contact (Sales Man can update status, internal notes, online MTG fields)"
+							},
+							"response": []
+						},
+						{
+							"name": "Convert Contact to Opportunity",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sales_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/sales/contacts/:id/convert-to-opportunity",
+									"host": ["{{base_url}}"],
+									"path": ["sales", "contacts", ":id", "convert-to-opportunity"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Convert contact to opportunity"
+							},
+							"response": []
+						},
+						{
+							"name": "Add Communication Log",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sales_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"message\": \"Follow up communication\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/sales/contacts/:id/communication-logs",
+									"host": ["{{base_url}}"],
+									"path": ["sales", "contacts", ":id", "communication-logs"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Add communication log to contact"
+							},
+							"response": []
+						},
+						{
+							"name": "Send Meeting Email",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sales_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"onlineMtgLink\": \"https://meet.google.com/xxx\",\n  \"onlineMtgDateTime\": \"2025/12/15 14:30\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/sales/contacts/:id/send-meeting-email",
+									"host": ["{{base_url}}"],
+									"path": ["sales", "contacts", ":id", "send-meeting-email"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Send meeting email to client with Online MTG Link and Date time"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sales Opportunities",
+					"item": [
+						{
+							"name": "Get Opportunities List",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sales_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/sales/opportunities?search=&status=&assigneeUserId=&createdBy=&page=0&size=20",
+									"host": ["{{base_url}}"],
+									"path": ["sales", "opportunities"],
+									"query": [
+										{
+											"key": "search",
+											"value": ""
+										},
+										{
+											"key": "status",
+											"value": ""
+										},
+										{
+											"key": "assigneeUserId",
+											"value": ""
+										},
+										{
+											"key": "createdBy",
+											"value": ""
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										}
+									]
+								},
+								"description": "Get paginated list of opportunities"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sales Opportunity Detail",
+					"item": [
+						{
+							"name": "Get Opportunity Detail",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sales_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/sales/opportunities/:id",
+									"host": ["{{base_url}}"],
+									"path": ["sales", "opportunities", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Get opportunity detail by ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Opportunity",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sales_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"contactId\": 1,\n  \"title\": \"New Opportunity\",\n  \"description\": \"Opportunity description\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/sales/opportunities",
+									"host": ["{{base_url}}"],
+									"path": ["sales", "opportunities"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Create new opportunity"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Opportunity",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sales_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Updated Opportunity\",\n  \"description\": \"Updated description\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/sales/opportunities/:id",
+									"host": ["{{base_url}}"],
+									"path": ["sales", "opportunities", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Update opportunity"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sales Dashboard",
+					"item": [
+						{
+							"name": "Get Dashboard Data",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sales_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/sales/dashboard",
+									"host": ["{{base_url}}"],
+									"path": ["sales", "dashboard"]
+								},
+								"description": "Get dashboard data for Sales users"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sales Contracts",
+					"item": [
+						{
+							"name": "Get Contracts List",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sales_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/sales/contracts?search=&status=&page=0&size=20",
+									"host": ["{{base_url}}"],
+									"path": ["sales", "contracts"],
+									"query": [
+										{
+											"key": "search",
+											"value": ""
+										},
+										{
+											"key": "status",
+											"value": ""
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										}
+									]
+								},
+								"description": "Get paginated list of contracts"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sales Documents",
+					"item": [
+						{
+							"name": "Get Documents List",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{sales_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/sales/documents?page=0&size=20",
+									"host": ["{{base_url}}"],
+									"path": ["sales", "documents"],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										}
+									]
+								},
+								"description": "Get paginated list of documents"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "4. Admin APIs",
+			"item": [
+				{
+					"name": "Admin Users",
+					"item": [
+						{
+							"name": "Get Users List",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/users?page=0&pageSize=10&search=&role=&status=",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "users"],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": ""
+										},
+										{
+											"key": "role",
+											"value": "",
+											"description": "Filter by role: SALES_MANAGER, SALES_REP"
+										},
+										{
+											"key": "status",
+											"value": "",
+											"description": "Filter by status: active, deleted"
+										}
+									]
+								},
+								"description": "Get paginated list of users with search and filter"
+							},
+							"response": []
+						},
+						{
+							"name": "Get User by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/users/:id",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "users", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Get user detail by ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Create User",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"fullName\": \"John Doe\",\n  \"role\": \"SALES_MANAGER\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"090-1234-5678\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/users",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "users"]
+								},
+								"description": "Create a new user (SALES_MANAGER or SALES_REP)"
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"fullName\": \"John Doe Updated\",\n  \"phone\": \"090-1234-5679\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/users/:id",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "users", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Update user information"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/users/:id",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "users", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Delete user (soft delete)"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Admin Engineers",
+					"item": [
+						{
+							"name": "Get Engineers List",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/engineers?page=0&pageSize=10&search=",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "engineers"],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "search",
+											"value": ""
+										}
+									]
+								},
+								"description": "Get paginated list of engineers"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Engineer by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/engineers/:id",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "engineers", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Get engineer detail by ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Engineer",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"fullName\": \"Engineer Name\",\n  \"email\": \"engineer@example.com\",\n  \"phone\": \"090-1234-5678\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/engineers",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "engineers"]
+								},
+								"description": "Create a new engineer"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Engineer",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"fullName\": \"Updated Engineer Name\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/engineers/:id",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "engineers", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Update engineer information"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Engineer",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/engineers/:id",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "engineers", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Delete engineer (soft delete)"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Admin Dashboard",
+					"item": [
+						{
+							"name": "Get Dashboard Data",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/dashboard",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "dashboard"]
+								},
+								"description": "Get dashboard data for Admin users"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Admin Master Data - Skills",
+					"item": [
+						{
+							"name": "Get Skills List",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/master-data/skills",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "master-data", "skills"]
+								},
+								"description": "Get list of skills"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Skill",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Java\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/master-data/skills",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "master-data", "skills"]
+								},
+								"description": "Create a new skill"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Skill",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Java Updated\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/master-data/skills/:id",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "master-data", "skills", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Update skill"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Skill",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/master-data/skills/:id",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "master-data", "skills", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Delete skill"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Admin Master Data - Project Types",
+					"item": [
+						{
+							"name": "Get Project Types List",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/master-data/project-types",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "master-data", "project-types"]
+								},
+								"description": "Get list of project types"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Project Type",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Web Development\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/master-data/project-types",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "master-data", "project-types"]
+								},
+								"description": "Create a new project type"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Project Type",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Web Development Updated\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/master-data/project-types/:id",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "master-data", "project-types", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Update project type"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Project Type",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/master-data/project-types/:id",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "master-data", "project-types", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Delete project type"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "5. Engineer APIs",
+			"item": [
+				{
+					"name": "Engineer Search",
+					"item": [
+						{
+							"name": "Search Engineers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/engineers/search?skills=&projectTypes=&minExperience=&maxExperience=&page=0&size=20",
+									"host": ["{{base_url}}"],
+									"path": ["engineers", "search"],
+									"query": [
+										{
+											"key": "skills",
+											"value": "",
+											"description": "Comma-separated skill IDs"
+										},
+										{
+											"key": "projectTypes",
+											"value": "",
+											"description": "Comma-separated project type IDs"
+										},
+										{
+											"key": "minExperience",
+											"value": ""
+										},
+										{
+											"key": "maxExperience",
+											"value": ""
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										}
+									]
+								},
+								"description": "Search engineers with filters"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Engineer Detail",
+					"item": [
+						{
+							"name": "Get Engineer Detail",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/engineers/:id",
+									"host": ["{{base_url}}"],
+									"path": ["engineers", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Get engineer detail by ID"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "6. Homepage APIs",
+			"item": [
+				{
+					"name": "Get Homepage Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/homepage",
+							"host": ["{{base_url}}"],
+							"path": ["homepage"]
+						},
+						"description": "Get homepage data (public API)"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://api.skill-bridge.dev.inisoft.vn/api",
+			"type": "string"
+		},
+		{
+			"key": "client_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "sales_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
+

@@ -1,0 +1,70 @@
+services:
+  # MySQL Database for Development
+  mysql:
+    image: mysql:8.0
+    container_name: skillbridge-mysql-dev
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: skillbridge_dev
+      MYSQL_USER: skillbridge_dev
+      MYSQL_PASSWORD: dev_password123
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_dev_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - skillbridge-dev-network
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -prootpassword --silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  # Spring Boot Backend (Development)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: skillbridge-backend-dev
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/skillbridge_dev?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: skillbridge_dev
+      SPRING_DATASOURCE_PASSWORD: dev_password123
+      SPRING_FLYWAY_CLEAN_DISABLED: "false"
+      SPRING_FLYWAY_CLEAN_ON_VALIDATION_ERROR: "true"
+    ports:
+      - "8081:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - skillbridge-dev-network
+
+
+  # Next.js Frontend (Development)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: skillbridge-frontend-dev
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8081/api
+      NODE_ENV: development
+    ports:
+      - "3001:3000"
+    depends_on:
+      - backend
+    networks:
+      - skillbridge-dev-network
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  mysql_dev_data:
+
+networks:
+  skillbridge-dev-network:
+    driver: bridge

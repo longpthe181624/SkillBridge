@@ -1,0 +1,152 @@
+{
+  "navigation": {
+    "home": "HOME",
+    "engineers": "List Engineer",
+    "services": "Service",
+    "contact": "Contact us",
+    "login": "Login"
+  },
+  "hero": {
+    "whatWeDo": "What We Do",
+    "ourService": "Our Service",
+    "japaneseText1": "A reliable Vietnam offshore development partner for your project.",
+    "japaneseText2": "Build faster, smarter, and more cost-effective with our expert team.",
+    "ctaButton": "Contact us →"
+  },
+  "introduction": {
+    "title": "SKILL BRIDGE",
+    "subtitle": "A Bridge Connecting Japanese Companies and Vietnamese IT Talent A Platform that Supports Challenges",
+    "description1": "SkillBridge is a business matching service specialized in offshore development in Vietnam. In Japan, hiring engineers is becoming increasingly difficult, and companies are struggling to secure skilled talent.",
+    "description2": "Through collaboration with experienced Vietnamese engineers, SkillBridge provides high-quality IT talent while significantly reducing costs.",
+    "description3": "We aim to solve the serious issue of IT talent shortages in Japanese companies and create a future where working with global talent is a natural part of every business."
+  },
+  "merits": {
+    "title": "- Merit -",
+    "subtitle": "To facilitate the future development of Japan The benefits provided by SKILL BRIDGE",
+    "merit1": {
+      "title": "Assign Top Talent",
+      "description": "We can assign highly skilled engineers who specialize in specific fields such as AI, blockchain, and mobile app development.",
+      "benefits": ["By securing experienced developers and BrSE, we ensure smooth project progress and deliver outstanding results."]
+    },
+    "merit2": {
+      "title": "Cost Efficiency without Quality Trade-off",
+      "description": "Significant cost savings compared to domestic development (30-50% reduction).",
+      "benefits": [
+        "Access to high-quality talent at competitive rates.",
+        "Transparent cost management with clear contract structure (MSA + Sub-contract), making it easy to scale resources as needed."
+      ]
+    },
+    "merit3": {
+      "title": "Smooth Communication & Flexible Engagement",
+      "description": "Supported by Bridge SEs and a standardized contract/engineer management system.",
+      "benefits": [
+        "Minimized risks related to language, culture, and process gaps through platform-based standardization.",
+        "Flexible engagement models: hire individual engineers, full teams, or request project consulting according to client needs."
+      ]
+    }
+  },
+  "challenges": {
+    "title": "SKILL BRIDGE Solves the Challenges of Offshore Development",
+    "challenge1": {
+      "title": "Offshore development costs...",
+      "description": "Offshore development costs, once an advantage, have become similar to domestic costs due to intermediaries and management fees",
+      "solution": "Achieving Remarkable Cost Performance - SkillBridge aims to restore the cost advantage by providing high quality at reasonable prices in Vietnam"
+    },
+    "challenge2": {
+      "title": "Communication with foreign engineers...",
+      "description": "Difficulties in smooth communication due to cultural and language differences, leading to delays and quality inconsistencies",
+      "solution": "Japanese BrSEs Ensuring Smooth Progress - Experienced Japanese SEs bridge communication gaps and provide technical/project management"
+    },
+    "challenge3": {
+      "title": "Concerned about...",
+      "description": "Concerns about the quality of deliverables and the difficulty in selecting reliable offshore development teams/engineers",
+      "solution": "Zero Concerns with Carefully Selected, Trusted Partners - SkillBridge's strict selection process for Vietnamese partners, focusing on skills, achievements, and human qualities"
+    }
+  },
+  "solutions": {
+    "title": "Solutions",
+    "subtitle": "Clear Communication, Successful Projects",
+    "subSubtitle": "Japanese SEs Lead Offshore Development to Success through Direction",
+    "description": "Communication plays a critical role in system development projects, especially across different languages, cultures, and time zones, to prevent misunderstandings and delays.",
+    "solution1": {
+      "title": "Appropriate Task Allocation Based on Technical Understanding",
+      "description": "Japanese SE staff ensure accurate task allocation based on technical understanding"
+    },
+    "solution2": {
+      "title": "Quick Communication Support",
+      "description": "Japanese SE staff facilitate quick and accurate communication for smooth project progress"
+    },
+    "solution3": {
+      "title": "Quality Management and Reviews",
+      "description": "Japanese staff participation ensures quality standards and supports continuous improvement"
+    },
+    "solution4": {
+      "title": "Support for Legal and Contract Procedures",
+      "description": "SkillBridge's expertise in Vietnam's legal system ensures smooth contract procedures"
+    },
+    "solution5": {
+      "title": "Progress Management with Time Zone Awareness",
+      "description": "Time zone differences are managed for efficient task allocation and collaboration"
+    },
+    "solution6": {
+      "title": "Smooth Project Handover Support",
+      "description": "Support for project handover, knowledge transfer, and operation manual preparation"
+    }
+  },
+  "footer": {
+    "links": {
+      "faq": "FAQ",
+      "terms": "Term",
+      "privacy": "Privacy policy"
+    },
+    "services": {
+      "home": "HOME",
+      "engineers": "List engineer",
+      "services": "Services",
+      "contact": "Contact us"
+    }
+  },
+  "engineerSearch": {
+    "pageTitle": "Find Engineers",
+    "pageDescription": "Discover skilled engineers available for your projects",
+    "searchPlaceholder": "Search by name, skill, or keyword...",
+    "advancedSearchButton": "Advanced Search",
+    "hideFiltersButton": "Hide Filters",
+    "filters": {
+      "title": "Search Filters",
+      "skills": "Skills",
+      "seniority": "Seniority",
+      "location": "Location",
+      "experience": "Years of Experience",
+      "experienceRange": "{{min}} - {{max}}+ years",
+      "salary": "Salary Range (¥)",
+      "salaryRange": "¥{{min}} - ¥{{max}}",
+      "availableOnly": "Available Only",
+      "resetFilters": "Reset All Filters"
+    },
+    "results": {
+      "searching": "Searching...",
+      "found": "{{count}} engineers found",
+      "noResults": "No engineers found matching your criteria.",
+      "clearFilters": "Clear Filters"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {{current}} of {{total}}"
+    },
+    "loading": "Loading..."
+  },
+  "sales": {
+    "changeRequestDetail": {
+      "sections": {
+        "currentResources": "Current Resources at Effective From",
+        "noCurrentResources": "No resource data provided.",
+        "resourcesAfter": "Resources After This Change Request",
+        "noResourcesAfter": "No resource changes provided.",
+        "currentBilling": "Current Billing Schedule (Read-only)",
+        "noBilling": "No billing details provided."
+      }
+    }
+  }
+}

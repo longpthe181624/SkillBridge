@@ -1,0 +1,111 @@
+spring:
+  application:
+    name: skillbridge-backend
+  
+  profiles:
+    active: dev
+  
+  datasource:
+    url: jdbc:mysql://localhost:3306/skillbridge_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: skillbridge_user
+    password: skillbridge_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+  
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    validate-on-migrate: true
+        
+  security:
+    user:
+      name: admin
+      password: admin123
+  
+  # Mail Configuration (for AWS SES SMTP)
+  mail:
+    host: email-smtp.ap-southeast-1.amazonaws.com
+    port: 2587
+    username: ${AWS_SES_USERNAME:}
+    password: ${AWS_SES_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+      
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.skillbridge: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# AWS Configuration
+aws:
+  # S3 Configuration
+  s3:
+    enabled: true
+    bucket-name: dev-skillbridge
+    region: ap-northeast-1
+  access-key-id: ${AWS_S3_ACCESS_KEY_ID:}
+  secret-access-key: ${AWS_S3_SECRET_ACCESS_KEY:}
+  region: ap-northeast-1
+  
+  # SES Configuration (SMTP)
+  ses:
+    enabled: true
+    region: ap-southeast-1
+    access-key: ${AWS_SES_USERNAME:}
+    secret-key: ${AWS_SES_PASSWORD:}
+    from-email: support_skillbridge@inisoft.vn
+    from-name: SkillBridge
+    configuration-set:
+
+# Email Configuration (for EmailService)
+email:
+  from: support_skillbridge@inisoft.vn
+  from-name: SkillBridge Support
+
+# JWT Configuration
+jwt:
+  secret: skillbridge-secret-key-change-in-production-very-long-secret-key-for-security
+  expiration: 86400000 # 24 hours in milliseconds
+
+# Password Reset Configuration
+password:
+  reset:
+    token:
+      expiration: 3600 # 1 hour in seconds
+
+# Application Configuration
+app:
+  base-url: http://localhost:3000 

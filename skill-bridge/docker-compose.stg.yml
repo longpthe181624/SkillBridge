@@ -1,0 +1,123 @@
+services:
+  # MySQL Database for Staging
+  mysql:
+    image: mysql:8.0
+    container_name: skillbridge-mysql-stg
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: skillbridge_stg
+      MYSQL_USER: skillbridge_stg
+      MYSQL_PASSWORD: dev_password123
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_stg_data:/var/lib/mysql
+    networks:
+      - skillbridge-stg-network
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -prootpassword --silent || exit 1"]
+      interval: 3s
+      timeout: 2s
+      retries: 20
+      start_period: 30s
+    restart: unless-stopped
+    shm_size: 256mb
+    command: >
+      --default-authentication-plugin=mysql_native_password
+      --max_connections=200
+      --innodb_buffer_pool_size=128M
+      --innodb_flush_log_at_trx_commit=2
+      --skip-name-resolve
+      --performance-schema=OFF
+      --max-allowed-packet=64M
+      --innodb_flush_method=O_DIRECT
+      --innodb_io_capacity=200
+      --innodb_read_io_threads=4
+      --innodb_write_io_threads=4
+
+  # Spring Boot Backend (Staging)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: skillbridge-backend-stg
+    environment:
+      SPRING_PROFILES_ACTIVE: stg
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/skillbridge_stg?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: skillbridge_stg
+      SPRING_DATASOURCE_PASSWORD: dev_password123
+      DB_USERNAME: skillbridge_stg
+      DB_PASSWORD: dev_password123
+      JAVA_OPTS: "-Xms512m -Xmx2048m -XX:+UseG1GC -XX:MaxGCPauseMillis=200"
+      AWS_S3_ACCESS_KEY_ID: ${AWS_S3_ACCESS_KEY_ID:-}
+      AWS_S3_SECRET_ACCESS_KEY: ${AWS_S3_SECRET_ACCESS_KEY:-}
+      AWS_SES_USERNAME: ${AWS_SES_USERNAME:-}
+      AWS_SES_PASSWORD: ${AWS_SES_PASSWORD:-}
+    ports:
+      - "8082:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - skillbridge-stg-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/api/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Next.js Frontend (Staging)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: https://api.skill-bridge.dev.inisoft.vn/
+        NODE_ENV: production
+    container_name: skillbridge-frontend-stg
+    environment:
+      NEXT_PUBLIC_API_URL: https://api.skill-bridge.dev.inisoft.vn/
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - skillbridge-stg-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # phpMyAdmin for MySQL Management
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: skillbridge-phpmyadmin-stg
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+      UPLOAD_LIMIT: 300M
+    ports:
+      - "8080:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - skillbridge-stg-network
+    restart: unless-stopped
+
+volumes:
+  mysql_stg_data:
+    driver: local
+
+networks:
+  skillbridge-stg-network:
+    driver: bridge
+
